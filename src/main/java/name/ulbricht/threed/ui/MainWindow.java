@@ -11,11 +11,12 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -67,6 +68,9 @@ public final class MainWindow {
     private AmbientLight backgroundLight;
 
     @FXML
+    private SubScene spaceScene;
+    private PerspectiveCamera camera;
+    @FXML
     private Group space;
 
     @FXML
@@ -105,6 +109,14 @@ public final class MainWindow {
 
     @FXML
     private void initialize() {
+        /*
+         * We cannot set the camera in FXML because the 'fixedEyeAtCameraZero'
+         * constructor argument is not annotated and has no setter.
+         */
+        this.camera = new PerspectiveCamera(true);
+        camera.setFarClip(2000);
+        this.spaceScene.setCamera(this.camera);
+
         setupRotationControls();
         setupTranslationControls();
 
@@ -120,28 +132,22 @@ public final class MainWindow {
     }
 
     private void setupRotationControls() {
-        this.space.rotateProperty().bind(Bindings.createDoubleBinding(() -> {
-            final var xAngle = this.rotationEditor.getXValue();
-            final var yAngle = this.rotationEditor.getYValue();
-            final var zAngle = this.rotationEditor.getZValue();
-            return Math.sqrt(xAngle * xAngle + yAngle * yAngle + zAngle * zAngle);
-        }, this.rotationEditor.xValueProperty(), this.rotationEditor.yValueProperty(),
-                this.rotationEditor.zValueProperty()));
+        final var xRotate = new Rotate(0, Rotate.X_AXIS);
+        xRotate.angleProperty().bind(this.rotationEditor.xValueProperty());
 
-        this.space.rotationAxisProperty().bind(Bindings.createObjectBinding(() -> {
-            final var xAngle = this.rotationEditor.getXValue();
-            final var yAngle = this.rotationEditor.getYValue();
-            final var zAngle = this.rotationEditor.getZValue();
-            final var norm = Math.sqrt(xAngle * xAngle + yAngle * yAngle + zAngle * zAngle);
-            return new Point3D(xAngle / norm, yAngle / norm, zAngle / norm);
-        }, this.rotationEditor.xValueProperty(), this.rotationEditor.yValueProperty(),
-                this.rotationEditor.zValueProperty()));
+        final var yRotate = new Rotate(0, Rotate.Y_AXIS);
+        yRotate.angleProperty().bind(this.rotationEditor.yValueProperty());
+
+        final var zRotate = new Rotate(0, Rotate.Z_AXIS);
+        zRotate.angleProperty().bind(this.rotationEditor.zValueProperty());
+
+        this.camera.getTransforms().addAll(xRotate, yRotate, zRotate);
     }
 
     private void setupTranslationControls() {
-        this.space.translateXProperty().bind(this.translationEditor.xValueProperty());
-        this.space.translateYProperty().bind(this.translationEditor.yValueProperty());
-        this.space.translateZProperty().bind(this.translationEditor.zValueProperty());
+        this.camera.translateXProperty().bind(this.translationEditor.xValueProperty());
+        this.camera.translateYProperty().bind(this.translationEditor.yValueProperty());
+        this.camera.translateZProperty().bind(this.translationEditor.zValueProperty());
     }
 
     private void setupLighting() {

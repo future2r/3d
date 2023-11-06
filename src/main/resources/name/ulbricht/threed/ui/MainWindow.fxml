@@ -24,7 +24,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.PhongMaterial?>
-<?import javafx.scene.PerspectiveCamera?>
 <?import javafx.scene.SceneAntialiasing?>
 <?import javafx.scene.shape.Sphere?>
 <?import javafx.scene.transform.Rotate?>
@@ -43,8 +42,10 @@
 
         <Double fx:id="axisRadius" fx:value="1" />
         <Double fx:id="axisLength" fx:value="500" />
-        <Double fx:id="axisMin" fx:value="-500" />
-        <Double fx:id="axisMax" fx:value="500" />
+        <Double fx:id="axisMin" fx:value="-1200" />
+        <Double fx:id="axisMax" fx:value="1200" />
+        <Double fx:id="initialXAxisRotation" fx:value="-30" />
+        <Double fx:id="initialYAxisTranslation" fx:value="-650" />
 
         <Double fx:id="earthRadius" fx:value="100" />
         <Double fx:id="earthTiltAngle" fx:value="23.44" />
@@ -52,6 +53,7 @@
             <Image fx:id="initialEarthTexture" url="@/name/ulbricht/threed/ui/earth1.jpg" />
             <Image url="@/name/ulbricht/threed/ui/earth2.jpg" />
             <Image url="@/name/ulbricht/threed/ui/earth3.jpg" />
+            <Image url="@/name/ulbricht/threed/ui/earth4.jpg" />
         </FXCollections>
 
         <Double fx:id="moonRadius" fx:value="25" />
@@ -77,12 +79,9 @@
                 <fill>
                     <Color fx:constant="TRANSPARENT" />
                 </fill>
-                <camera>
-                    <PerspectiveCamera fx:id="camera"/>
-                </camera>
+
                 <root>
                     <Group fx:id="space">
-
                         <AmbientLight fx:id="backgroundLight" color="$backgroundColor"
                             lightOn="${backgroundLightCheckBox.selected}" />
                         <DirectionalLight lightOn="${sunLightCheckBox.selected}"
@@ -160,7 +159,6 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Sphere>
-
                     </Group>
                 </root>
             </ResizableSubScene>
@@ -168,24 +166,24 @@
     </center>
     <right>
         <VBox styleClass="default-padding,default-spacing">
-            <TitledPane text="Axes" collapsible="false">
+            <TitledPane text="Axes">
                 <VBox styleClass="default-padding, default-spacing">
                     <CheckBox fx:id="axesVisibleCheckBox" text="Axes visible" selected="true" />
                 </VBox>
             </TitledPane>
-            <TitledPane text="Rotation" collapsible="false" prefWidth="250">
+            <TitledPane text="Camera Rotation" prefWidth="250">
                 <AxesEditor fx:id="rotationEditor"
-                    xMin="-180" xMax="180" xValue="30"
-                    yMin="-180" yMax="180" yValue="45"
+                    xMin="-180" xMax="180" xValue="$initialXAxisRotation"
+                    yMin="-180" yMax="180"
                     zMin="-180" zMax="180" />
             </TitledPane>
-            <TitledPane text="Translation" collapsible="false" prefWidth="250">
+            <TitledPane text="Camera Movement" prefWidth="250">
                 <AxesEditor fx:id="translationEditor"
-                    xMin="$axisMin" xMax="$axisMax" xValue="$moonDistance"
-                    yMin="$axisMin" yMax="$axisMax" yValue="$moonDistance"
-                    zMin="$axisMin" zMax="$axisMax" />
+                    xMin="$axisMin" xMax="$axisMax"
+                    yMin="$axisMin" yMax="$axisMax" yValue="$initialYAxisTranslation"
+                    zMin="$axisMin" zMax="$axisMax" zValue="$axisMin" />
             </TitledPane>
-            <TitledPane text="Lights" collapsible="false">
+            <TitledPane text="Lights">
                 <GridPane styleClass="default-padding,default-gaps">
                     <columnConstraints>
                         <ColumnConstraints hgrow="never" prefWidth="20" />
@@ -208,7 +206,7 @@
                         GridPane.rowIndex="3" GridPane.columnIndex="2" />
                 </GridPane>
             </TitledPane>
-            <TitledPane text="Earth" collapsible="false">
+            <TitledPane text="Earth">
                 <GridPane styleClass="default-padding,default-gaps">
                     <columnConstraints>
                         <ColumnConstraints hgrow="never" />
@@ -230,7 +228,7 @@
                     </ComboBox>
                 </GridPane>
             </TitledPane>
-            <TitledPane text="Moon" collapsible="false">
+            <TitledPane text="Moon">
                 <GridPane styleClass="default-padding,default-gaps">
                     <columnConstraints>
                         <ColumnConstraints hgrow="never" />
