@@ -10,6 +10,7 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.Cursor?>
@@ -165,91 +166,93 @@
         </StackPane>
     </center>
     <right>
-        <VBox styleClass="default-padding,default-spacing">
-            <TitledPane text="Axes">
-                <VBox styleClass="default-padding, default-spacing">
-                    <CheckBox fx:id="axesVisibleCheckBox" text="Axes visible" selected="true" />
-                </VBox>
-            </TitledPane>
-            <TitledPane text="Camera Rotation" prefWidth="250">
-                <AxesEditor fx:id="rotationEditor"
-                    xMin="-180" xMax="180" xValue="$initialXAxisRotation"
-                    yMin="-180" yMax="180"
-                    zMin="-180" zMax="180" />
-            </TitledPane>
-            <TitledPane text="Camera Movement" prefWidth="250">
-                <AxesEditor fx:id="translationEditor"
-                    xMin="$axisMin" xMax="$axisMax"
-                    yMin="$axisMin" yMax="$axisMax" yValue="$initialYAxisTranslation"
-                    zMin="$axisMin" zMax="$axisMax" zValue="$axisMin" />
-            </TitledPane>
-            <TitledPane text="Lights">
-                <GridPane styleClass="default-padding,default-gaps">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="never" prefWidth="20" />
-                        <ColumnConstraints hgrow="never" />
-                        <ColumnConstraints hgrow="always" />
-                    </columnConstraints>
-                    <CheckBox fx:id="backgroundLightCheckBox" text="Space Background"
-                        selected="true" GridPane.columnSpan="3" />
-                    <Label text="Brightness:" disable="${!backgroundLightCheckBox.selected}"
-                        GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                    <Slider fx:id="backgroundBrightnessSlider" min="0" max="1" value="0.2"
-                        disable="${!backgroundLightCheckBox.selected}"
-                        GridPane.rowIndex="1" GridPane.columnIndex="2" />
-                    <CheckBox fx:id="sunLightCheckBox" text="Sun" selected="true"
-                        GridPane.rowIndex="2" GridPane.columnSpan="3" />
-                    <Label text="Sun Color:" disable="${!sunLightCheckBox.selected}"
-                        GridPane.rowIndex="3" GridPane.columnIndex="1" />
-                    <ColorPicker fx:id="sunColorPicker" value="$sunColor"
-                        disable="${!sunLightCheckBox.selected}"
-                        GridPane.rowIndex="3" GridPane.columnIndex="2" />
-                </GridPane>
-            </TitledPane>
-            <TitledPane text="Earth">
-                <GridPane styleClass="default-padding,default-gaps">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="never" />
-                        <ColumnConstraints hgrow="always" />
-                    </columnConstraints>
-                    <CheckBox
-                        fx:id="animateEarthCheckBox" text="Animate Earth" selected="true"
-                        onAction="#toggleEarthAnimation" GridPane.columnSpan="2" />
-                    <Label text="Texture:" GridPane.rowIndex="1" />
-                    <ComboBox fx:id="earthTextureChoiceBox"
-                        items="$earthTextures" value="$initialEarthTexture"
-                        GridPane.rowIndex="1" GridPane.columnIndex="1">
-                        <buttonCell>
-                            <ImageListCell cellHeight="30" />
-                        </buttonCell>
-                        <cellFactory>
-                            <ImageListCellFactory cellHeight="30" />
-                        </cellFactory>
-                    </ComboBox>
-                </GridPane>
-            </TitledPane>
-            <TitledPane text="Moon">
-                <GridPane styleClass="default-padding,default-gaps">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="never" />
-                        <ColumnConstraints hgrow="always" />
-                    </columnConstraints>
-                    <CheckBox fx:id="animateMoonCheckBox" text="Animate Moon" selected="true"
-                        onAction="#toggleMoonAnimation" GridPane.columnSpan="2" />
-                    <Label text="Texture:" GridPane.rowIndex="1" />
-                    <ComboBox fx:id="moonTextureChoiceBox"
-                        items="$moonTextures" value="$initialMoonTexture"
-                        GridPane.rowIndex="1" GridPane.columnIndex="1">
-                        <buttonCell>
-                            <ImageListCell cellHeight="30" />
-                        </buttonCell>
-                        <cellFactory>
-                            <ImageListCellFactory cellHeight="30" />
-                        </cellFactory>
-                    </ComboBox>
-                </GridPane>
-            </TitledPane>
-        </VBox>
+        <ScrollPane fitToWidth="true">
+            <VBox styleClass="default-padding,default-spacing">
+                <TitledPane text="Axes" expanded="false">
+                    <VBox styleClass="default-padding, default-spacing">
+                        <CheckBox fx:id="axesVisibleCheckBox" text="Axes visible" />
+                    </VBox>
+                </TitledPane>
+                <TitledPane text="Camera Rotation" expanded="false" prefWidth="250">
+                    <AxesEditor fx:id="rotationEditor"
+                        xMin="-180" xMax="180" xValue="$initialXAxisRotation"
+                        yMin="-180" yMax="180"
+                        zMin="-180" zMax="180" />
+                </TitledPane>
+                <TitledPane text="Camera Movement" expanded="false" prefWidth="250">
+                    <AxesEditor fx:id="translationEditor"
+                        xMin="$axisMin" xMax="$axisMax"
+                        yMin="$axisMin" yMax="$axisMax" yValue="$initialYAxisTranslation"
+                        zMin="$axisMin" zMax="$axisMax" zValue="$axisMin" />
+                </TitledPane>
+                <TitledPane text="Lights">
+                    <GridPane styleClass="default-padding,default-gaps">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="never" prefWidth="20" />
+                            <ColumnConstraints hgrow="never" />
+                            <ColumnConstraints hgrow="always" />
+                        </columnConstraints>
+                        <CheckBox fx:id="backgroundLightCheckBox" text="Space Background"
+                            selected="true" GridPane.columnSpan="3" />
+                        <Label text="Brightness:" disable="${!backgroundLightCheckBox.selected}"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                        <Slider fx:id="backgroundBrightnessSlider" min="0" max="1" value="0.2"
+                            disable="${!backgroundLightCheckBox.selected}"
+                            GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                        <CheckBox fx:id="sunLightCheckBox" text="Sun" selected="true"
+                            GridPane.rowIndex="2" GridPane.columnSpan="3" />
+                        <Label text="Sun Color:" disable="${!sunLightCheckBox.selected}"
+                            GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                        <ColorPicker fx:id="sunColorPicker" value="$sunColor"
+                            disable="${!sunLightCheckBox.selected}"
+                            GridPane.rowIndex="3" GridPane.columnIndex="2" />
+                    </GridPane>
+                </TitledPane>
+                <TitledPane text="Earth">
+                    <GridPane styleClass="default-padding,default-gaps">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="never" />
+                            <ColumnConstraints hgrow="always" />
+                        </columnConstraints>
+                        <CheckBox
+                            fx:id="animateEarthCheckBox" text="Animate Earth" selected="true"
+                            onAction="#toggleEarthAnimation" GridPane.columnSpan="2" />
+                        <Label text="Texture:" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="earthTextureChoiceBox"
+                            items="$earthTextures" value="$initialEarthTexture"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1">
+                            <buttonCell>
+                                <ImageListCell cellHeight="30" />
+                            </buttonCell>
+                            <cellFactory>
+                                <ImageListCellFactory cellHeight="30" />
+                            </cellFactory>
+                        </ComboBox>
+                    </GridPane>
+                </TitledPane>
+                <TitledPane text="Moon">
+                    <GridPane styleClass="default-padding,default-gaps">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="never" />
+                            <ColumnConstraints hgrow="always" />
+                        </columnConstraints>
+                        <CheckBox fx:id="animateMoonCheckBox" text="Animate Moon" selected="true"
+                            onAction="#toggleMoonAnimation" GridPane.columnSpan="2" />
+                        <Label text="Texture:" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="moonTextureChoiceBox"
+                            items="$moonTextures" value="$initialMoonTexture"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1">
+                            <buttonCell>
+                                <ImageListCell cellHeight="30" />
+                            </buttonCell>
+                            <cellFactory>
+                                <ImageListCellFactory cellHeight="30" />
+                            </cellFactory>
+                        </ComboBox>
+                    </GridPane>
+                </TitledPane>
+            </VBox>
+        </ScrollPane>
     </right>
 
     <bottom>
