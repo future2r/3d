@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.PhongMaterial?>
+<?import javafx.scene.shape.Cylinder?>
+<?import javafx.scene.transform.Rotate?>
+
+<fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1">
+    <Cylinder fx:id="xAxis" height="100" rotate="90">
+        <rotationAxis>
+            <Rotate fx:constant="Z_AXIS" />
+        </rotationAxis>
+        <material>
+            <PhongMaterial>
+                <diffuseColor>
+                    <Color fx:constant="RED" />
+                </diffuseColor>
+            </PhongMaterial>
+        </material>
+    </Cylinder>
+    <Cylinder fx:id="yAxis" height="100">
+        <material>
+            <PhongMaterial>
+                <diffuseColor>
+                    <Color fx:constant="GREEN" />
+                </diffuseColor>
+            </PhongMaterial>
+        </material>
+    </Cylinder>
+    <Cylinder fx:id="zAxis" height="100" rotate="90">
+        <rotationAxis>
+            <Rotate fx:constant="X_AXIS" />
+        </rotationAxis>
+        <material>
+            <PhongMaterial>
+                <diffuseColor>
+                    <Color fx:constant="BLUE" />
+                </diffuseColor>
+            </PhongMaterial>
+        </material>
+    </Cylinder>
+</fx:root>

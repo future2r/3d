@@ -1,0 +1,18 @@
+.default-padding {
+    -fx-padding: .5em;
+}
+
+.default-gaps {
+    -fx-hgap: .5em;
+    -fx-vgap: .5em;
+}
+
+.default-spacing {
+    -fx-spacing: .5em;
+}
+
+#backgroundPane {
+    -fx-background-image: url("space.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
